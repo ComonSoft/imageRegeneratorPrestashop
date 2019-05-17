@@ -203,6 +203,14 @@ class ImageRegenerator extends Module
 		}else{
 			$imageObj = new Image($image);
 			$existing_img = $dir.$imageObj->getExistingImgPath().'.jpg';
+			
+			// BO mini deletion - Sometimes mini thumbnails in BO are not refreshed
+			foreach (scandir(_PS_TMP_IMG_DIR_) as $d) {
+				if (preg_match('/product_mini_' . $imageObj->id_product . '_(.*)\.jpg$/', $d)) {
+				    unlink(_PS_TMP_IMG_DIR_ . $d);
+				}
+			}
+			
 			if (file_exists($existing_img) && filesize($existing_img))
 			{
 				if($watermark == 1){
