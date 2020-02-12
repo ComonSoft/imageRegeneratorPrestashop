@@ -9,7 +9,7 @@ class ImageRegenerator extends Module
 		$this->bootstrap = true;
 		$this->name = 'imageregenerator';
 		$this->tab = 'administration';
-		$this->version = '1.1';
+		$this->version = '1.2';
 		$this->author = 'Jérémy Besson';
 		$this->need_instance = 0;
 		$this->ps_versions_compliancy = array('min' => '1.5', 'max' => '1.7');
@@ -85,10 +85,12 @@ class ImageRegenerator extends Module
 				array('type' => 'categories', 'dir' => _PS_CAT_IMG_DIR_),
 				array('type' => 'manufacturers', 'dir' => _PS_MANU_IMG_DIR_),
 				array('type' => 'suppliers', 'dir' => _PS_SUPP_IMG_DIR_),
-				array('type' => 'scenes', 'dir' => _PS_SCENE_IMG_DIR_),
 				array('type' => 'products', 'dir' => _PS_PROD_IMG_DIR_),
 				array('type' => 'stores', 'dir' => _PS_STORE_IMG_DIR_)
 				);
+			if( defined('_PS_SCENE_IMG_DIR_') ) {
+				$process[] = array('type' => 'scenes', 'dir' => _PS_SCENE_IMG_DIR_);
+			}
 			foreach ($process as $proc)
 			{
 				$list[$proc["type"]] = array("todo"=>array(),"done"=>array(),"errors"=>array());
@@ -150,10 +152,12 @@ class ImageRegenerator extends Module
 		$process =array('categories' => _PS_CAT_IMG_DIR_,
 			'manufacturers' => _PS_MANU_IMG_DIR_,
 			'suppliers' => _PS_SUPP_IMG_DIR_,
-			'scenes' => _PS_SCENE_IMG_DIR_,
 			'products' => _PS_PROD_IMG_DIR_,
 			'stores' => _PS_STORE_IMG_DIR_
 			);
+		if( defined('_PS_SCENE_IMG_DIR_') ) {
+			$process[] = array('type' => 'scenes', 'dir' => _PS_SCENE_IMG_DIR_);
+		}
 		$baseType = Tools::getValue('type');
 		$type = ImageType::getImagesTypes($baseType);
 		$image = Tools::getValue('image');
